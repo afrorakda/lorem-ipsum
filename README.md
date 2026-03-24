@@ -8,8 +8,6 @@ Open the tool, select your required word count (100, 300, or 1000 words), and th
 
 ## How to use
 
-[https://afrorakda.github.io/Lorem-Ipsum/](https://afrorakda.github.io/Lorem-Ipsum/)
-
 1.  Click **"100 Words"**, **"300 Words"**, or **"1000 Words"**.
 2.  The text appears in the box and is automatically **copied to your clipboard**.
 3.  Paste it into your design or development work immediately.
