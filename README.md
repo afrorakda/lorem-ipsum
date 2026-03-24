@@ -6,12 +6,6 @@ Part of the Fridge Combo project. A minimalist, one-action dummy text generator 
 
 Open the tool, select your required word count (100, 300, or 1000 words), and the placeholder text is instantly generated and copied to your clipboard. No settings, no distractions.
 
-## How to use
-
-1.  Click **"100 Words"**, **"300 Words"**, or **"1000 Words"**.
-2.  The text appears in the box and is automatically **copied to your clipboard**.
-3.  Paste it into your design or development work immediately.
-
 ## For Professionals
 
 This tool generates standard, non-distracting placeholder text based on the classic Latin text used globally in the design industry. Perfect for checking font sizes, line height, and overall layout without the distraction of meaningful content.
