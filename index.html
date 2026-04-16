@@ -59,31 +59,31 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 8px;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .gen-btn {
             background-color: var(--main); color: #fff;
             border: none; border-radius: var(--radius);
-            padding: 15px 5px; font-size: 0.8rem; font-weight: 800;
-            cursor: pointer; transition: 0.2s; -webkit-appearance: none;
+            padding: 16px 5px; font-size: 0.85rem; font-weight: 900;
+            cursor: pointer; transition: 0.15s; -webkit-appearance: none;
         }
-        .gen-btn:active { transform: scale(0.97); opacity: 0.8; }
+        .gen-btn:active { transform: scale(0.97) translateY(2px); opacity: 0.9; }
 
         .status-msg {
             height: 24px; text-align: center; font-size: 0.8rem;
-            font-weight: 800; color: var(--main); margin-bottom: 5px;
+            font-weight: 800; color: var(--main); margin-bottom: 8px;
         }
 
         textarea { 
             width: 100%; flex-grow: 1; padding: 18px; border: 2px solid var(--accent); border-radius: var(--radius); 
-            box-sizing: border-box; font-size: 15px; outline: none; transition: 0.2s; 
+            box-sizing: border-box; font-size: 15px; outline: none; transition: 0.3s; 
             font-weight: 500; background: var(--input-bg);
             line-height: 1.6; resize: none; margin-bottom: 20px;
             -webkit-appearance: none; -webkit-text-fill-color: #333; opacity: 1 !important;
             user-select: auto !important; -webkit-user-select: auto !important; 
         }
-        textarea:focus { border-color: var(--main); background: #fff; }
+        textarea.flash { background: #fff !important; border-color: #aaa !important; transition: none; }
 
         footer { padding: 15px 0 25px; text-align: center; border-top: 1px solid #f5f5f5; font-size: 11px; color: #666; font-weight: 600; }
         .footer-btns { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
@@ -117,9 +117,9 @@
         </header>
         
         <div class="btn-group">
-            <button class="gen-btn" onclick="generate(100)">100 Words</button>
-            <button class="gen-btn" onclick="generate(300)">300 Words</button>
-            <button class="gen-btn" onclick="generate(1000)">1000 Words</button>
+            <button class="gen-btn" onclick="generate(1)">Short</button>
+            <button class="gen-btn" onclick="generate(3)">Medium</button>
+            <button class="gen-btn" onclick="generate(5)">Long</button>
         </div>
 
         <div class="status-msg" id="status"></div>
@@ -151,18 +151,31 @@
 </div>
 
 <script>
-    const loremBase = "lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum";
+    const wordsArr = "lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum".split(' ');
     
-    function generate(count) {
-        const words = loremBase.split(' ');
-        let result = [];
-        for (let i = 0; i < count; i++) {
-            const randomIndex = Math.floor(Math.random() * words.length);
-            result.push(words[randomIndex]);
+    function generateParagraph() {
+        let p = [];
+        const length = 30 + Math.floor(Math.random() * 20);
+        for (let i = 0; i < length; i++) {
+            p.push(wordsArr[Math.floor(Math.random() * wordsArr.length)]);
         }
-        const text = result.join(' ').charAt(0).toUpperCase() + result.join(' ').slice(1) + ".";
+        let s = p.join(' ');
+        return s.charAt(0).toUpperCase() + s.slice(1) + ".";
+    }
+
+    function generate(pCount) {
+        let paragraphs = [];
+        for (let i = 0; i < pCount; i++) {
+            paragraphs.push(generateParagraph());
+        }
+        const finalContent = paragraphs.join('\n\n');
         const output = document.getElementById('output-box');
-        output.value = text;
+        output.value = finalContent;
+        
+        // 演出：フラッシュ
+        output.classList.add('flash');
+        setTimeout(() => output.classList.remove('flash'), 150);
+
         copyText();
     }
 
@@ -170,12 +183,10 @@
         const output = document.getElementById('output-box');
         if (!output.value) return;
         
-        output.select();
-        output.setSelectionRange(0, 99999);
         navigator.clipboard.writeText(output.value).then(() => {
             const status = document.getElementById('status');
             status.innerText = "✨ Copied to clipboard!";
-            setTimeout(() => { status.innerText = ""; }, 2000);
+            setTimeout(() => { status.innerText = ""; }, 1500);
         });
     }
 
