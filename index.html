@@ -72,7 +72,7 @@
         .gen-btn:active { transform: scale(0.97); }
 
         .status-msg {
-            height: 24px; text-align: center; font-size: 0.75rem;
+            height: 24px; text-align: center; font-size: 0.7rem;
             font-weight: 800; color: #4CAF50; margin-bottom: 4px;
         }
 
@@ -173,25 +173,24 @@
         const output = document.getElementById('output-box');
         output.value = finalContent;
         
-        // ボタン状態の更新
         document.querySelectorAll('.gen-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
 
-        // 演出：フラッシュ
         output.classList.add('flash');
         setTimeout(() => output.classList.remove('flash'), 150);
 
-        copyText();
+        copyText(pCount);
     }
 
-    function copyText() {
+    function copyText(pCount) {
         const output = document.getElementById('output-box');
         if (!output.value) return;
         
         navigator.clipboard.writeText(output.value).then(() => {
             const status = document.getElementById('status');
-            status.innerText = "✨ GENERATED & COPIED!";
-            setTimeout(() => { status.innerText = ""; }, 1500);
+            const unit = pCount === 1 ? "Paragraph" : "Paragraphs";
+            status.innerText = `✨ ${pCount} ${unit} generated & copied!`;
+            setTimeout(() => { status.innerText = ""; }, 1800);
         });
     }
 
